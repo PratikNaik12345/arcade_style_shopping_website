@@ -1,86 +1,62 @@
-import { motion, useMotionValue, useTransform, animate } from "framer-motion";
-import { useEffect } from "react";
+import { motion, useMotionValue, useTransform } from "framer-motion"
 
-function Shelf({ products, selected, setIndex }) {
+function Shelf({ products }) {
 
-  const itemWidth = 190;       // 170 card + 20 margin
-  const viewportWidth = 600;
-  const total = products.length;
+  const rotation = useMotionValue(0)
 
-  const centerOffset = viewportWidth / 2 - itemWidth / 2;
+  const radius = 320
+  const step = 360 / products.length
 
-  const x = useMotionValue(centerOffset - selected * itemWidth);
-
-  useEffect(() => {
-    animate(x, centerOffset - selected * itemWidth, {
-      type: "spring",
-      stiffness: 300,
-      damping: 30
-    });
-  }, [selected]);
-
-  const handleDragEnd = () => {
-
-    const current = x.get();
-
-    let newIndex = Math.round((centerOffset - current) / itemWidth);
-
-    newIndex = (newIndex + total) % total;
-
-    setIndex(newIndex);
-
-    animate(x, centerOffset - newIndex * itemWidth, {
-      type: "spring",
-      stiffness: 300,
-      damping: 30
-    });
-
-  };
+  const handleDrag = (e, info) => {
+    rotation.set(rotation.get() + info.delta.x * 0.4)
+  }
 
   return (
-    <div className="viewport">
 
+    <div className="ring">
+
+      {/* Drag layer */}
       <motion.div
-        className="reel"
+        className="dragLayer"
         drag="x"
-        style={{ x }}
-        dragConstraints={false}
-        onDragEnd={handleDragEnd}
-      >
+        dragMomentum={false}
+        onDrag={handleDrag}
+      />
 
-        {products.map((p, i) => {
+      {products.map((p, i) => {
 
-          const distance = useTransform(
-            x,
-            v => (centerOffset - v) / itemWidth - i
-          );
+        const angle = useTransform(rotation, r => i * step + r)
 
-          const scale = useTransform(distance, [-1, 0, 1], [0.8, 1.2, 0.8]);
-          const opacity = useTransform(distance, [-2, 0, 2], [0.3, 1, 0.3]);
-          const rotateY = useTransform(distance, [-1, 0, 1], [40, 0, -40]);
+        const x = useTransform(angle, a =>
+          Math.sin((a * Math.PI) / 180) * radius
+        )
 
-          return (
-            <motion.div
-              key={i}
-              className="item"
-              style={{
-                scale,
-                opacity,
-                rotateY
-              }}
-            >
-              <div className="emoji">{p.emoji}</div>
-              <h3>{p.name}</h3>
-              <p>${p.price}</p>
-            </motion.div>
-          );
+        const z = useTransform(angle, a =>
+          Math.cos((a * Math.PI) / 180) * radius
+        )
 
-        })}
+        const scale = useTransform(z, [-radius, 0, radius], [0.7, 0.85, 1])
 
-      </motion.div>
+        return (
+          <motion.div
+            key={i}
+            className="item"
+            style={{
+              x,
+              scale,
+              rotateY: angle
+            }}
+          >
+            <div className="emoji">{p.emoji}</div>
+            <h3>{p.name}</h3>
+            <p>${p.price}</p>
+          </motion.div>
+        )
+
+      })}
 
     </div>
-  );
+  )
 }
 
-export default Shelf;
+export default Shelf
