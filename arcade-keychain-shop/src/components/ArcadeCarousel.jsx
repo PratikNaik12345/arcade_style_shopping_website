@@ -52,25 +52,25 @@ export default function ArcadeCarousel() {
           onPointerLeave={handlePointerUp}
           onPointerCancel={handlePointerUp}
         >
-          <div className={styles.track} style={{ transformStyle: 'preserve-3d' }}>
-            {products.map((product, i) => {
-              const cardStyle = getCardTransform(i, current, 7, animate)
-              const isActive = i === current
-              return (
-                <ProductCard
-                  key={product.name}
-                  product={product}
-                  cardStyle={{
-                    ...cardStyle,
-                    boxShadow: isActive
-                      ? `0 0 60px ${product.accent}55, 0 20px 40px rgba(0,0,0,0.7)`
-                      : '0 10px 30px rgba(0,0,0,0.5)',
-                  }}
-                  onClick={() => jumpTo(i)}
-                />
-              )
-            })}
-          </div>
+         <div className={styles.track} style={{ transformStyle: 'preserve-3d' }}>
+  {products.map((product, i) => {
+    const cardStyle = getCardTransform(i, current, 7, animate)
+    const isActive = i === current
+    return (
+      <ProductCard
+        key={`${product.name}-${i}`}
+        product={product}
+        cardStyle={{
+          ...cardStyle,
+          boxShadow: isActive
+            ? `0 0 60px ${product.accent}55, 0 20px 40px rgba(0,0,0,0.7)`
+            : '0 10px 30px rgba(0,0,0,0.5)',
+        }}
+        onClick={() => jumpTo(i)}
+      />
+    )
+  })}
+</div>
           <div className={styles.floorLine} />
         </div>
       </div>
@@ -102,3 +102,4 @@ export default function ArcadeCarousel() {
     </div>
   )
 }
+

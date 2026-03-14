@@ -24,8 +24,8 @@ export function getCardTransform(index, current, total, animate) {
     opacity,
     visibility,
     transition: animate
-      ? 'transform 0.45s cubic-bezier(0.34,1.2,0.64,1), opacity 0.35s ease'
-      : 'none',
+  ? 'transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease'
+  : 'none',
     zIndex: abs === 0 ? 10 : abs === 1 ? 5 : abs === 2 ? 3 : 1,
     pointerEvents: abs <= 1 ? 'auto' : 'none',
   }
