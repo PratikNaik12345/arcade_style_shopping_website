@@ -1,0 +1,24 @@
+{
+  "name": "arcade_style_shopping_website",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "cd arcade-keychain-shop && npm run dev",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PratikNaik12345/arcade_style_shopping_website.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/PratikNaik12345/arcade_style_shopping_website/issues"
+  },
+  "homepage": "https://github.com/PratikNaik12345/arcade_style_shopping_website#readme",
+  "devDependencies": {
+    "vite": "^8.0.3"
+  }
+}

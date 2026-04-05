@@ -1,11 +1,117 @@
-*, *::before, *::after {
-  box-sizing: border-box;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+*,
+*::before,
+*::after {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
 }
 
-html, body, #root {
+html,
+body,
+#root {
   width: 100%;
-  min-height: 100vh;
-  background: #0a0a12;
+  height: 100%;
+  overflow: hidden;
+  background: #050210;
+  font-family: 'Nunito', sans-serif;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ═══════ CUSTOM UTILITIES ═══════ */
+@layer utilities {
+  .text-shadow-neon-pink {
+    text-shadow: 0 0 8px #ff2d95, 0 0 25px #ff2d95, 0 0 50px rgba(255, 45, 149, 0.4);
+  }
+  .text-shadow-gold {
+    text-shadow: 0 0 8px rgba(255, 215, 0, 0.4);
+  }
+  .shadow-neon-pink {
+    box-shadow: 0 0 12px #ff2d95, 0 0 30px rgba(255, 45, 149, 0.25),
+      inset 0 0 12px rgba(255, 45, 149, 0.08);
+  }
+  .filter-neon-pink {
+    filter: drop-shadow(0 0 6px #ff2d95);
+  }
+}
+
+/* ═══════ GLASS REFLECTION ═══════ */
+.glass-reflect::before {
+  content: '';
+  position: absolute;
+  top: -30%;
+  left: -15%;
+  width: 50%;
+  height: 70%;
+  background: radial-gradient(ellipse, rgba(255, 255, 255, 0.035), transparent 70%);
+  transform: rotate(-15deg);
+  pointer-events: none;
+  z-index: 20;
+}
+
+/* ═══════ CLAW CABLE PATTERN ═══════ */
+.cable-pattern {
+  background: repeating-linear-gradient(180deg, #999 0px, #666 2px, #999 4px);
+}
+
+/* ═══════ MACHINE CHROME STRIPS ═══════ */
+.chrome-strip-l,
+.chrome-strip-r {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  z-index: 50;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.15),
+    rgba(255, 255, 255, 0.03),
+    rgba(255, 255, 255, 0.1)
+  );
+}
+.chrome-strip-l { left: 0; }
+.chrome-strip-r { right: 0; }
+
+/* ═══════ GRAB BUTTON ACTIVE ═══════ */
+.grab-btn-active:active {
+  transform: translateY(5px);
+  box-shadow: 0 2px 0 #880025, 0 3px 8px rgba(0, 0, 0, 0.4),
+    0 0 40px rgba(255, 45, 100, 0.35),
+    inset 0 -2px 5px rgba(0, 0, 0, 0.3),
+    inset 0 4px 8px rgba(255, 255, 255, 0.15);
+}
+
+/* ═══════ FLYING PRIZE ═══════ */
+.flying-prize {
+  position: fixed;
+  z-index: 200;
+  pointer-events: none;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 0 30px rgba(255, 215, 0, 0.5);
+  transition: all 0.65s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* ═══════ TOAST ═══════ */
+.toast-enter {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+}
+.toast-exit {
+  transform: translateX(-50%) translateY(100px);
+  opacity: 0;
+}
+
+/* ═══════ SCROLLBAR HIDE ═══════ */
+::-webkit-scrollbar {
+  display: none;
 }
